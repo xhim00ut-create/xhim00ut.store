@@ -20,7 +20,7 @@ body{
   color:#111;
 }
 
-/* NAV */
+/* NAV (NOT STICKY) */
 nav{
   display:flex;
   flex-direction:column;
@@ -44,6 +44,33 @@ nav img{
   text-decoration:none;
   color:#111;
   font-size:13px;
+}
+
+/* 🔥 FLOATING CART ICON (FOLLOWS YOU) */
+.cart-icon{
+  position:fixed;
+  right:20px;
+  top:20px;
+  font-size:22px;
+  cursor:pointer;
+  z-index:9999;
+}
+
+/* badge */
+.cart-count{
+  position:absolute;
+  top:0;
+  right:-10px;
+  background:#E9C589;
+  color:#111;
+  font-size:10px;
+  width:18px;
+  height:18px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  border-radius:50%;
+  font-weight:600;
 }
 
 /* HERO */
@@ -75,7 +102,6 @@ nav img{
   font-size:14px;
 }
 
-/* SHOP BUTTON */
 .shop-btn{
   background:#E9C589;
   color:#111;
@@ -119,38 +145,6 @@ nav img{
   border-radius:10px;
 }
 
-/* CART */
-.cart{
-  position:fixed;
-  right:20px;
-  bottom:20px;
-  background:#111;
-  color:#fff;
-  padding:15px;
-  border-radius:12px;
-  width:260px;
-  max-height:320px;
-  overflow:auto;
-}
-
-.cart-item{
-  font-size:12px;
-  margin-top:8px;
-  border-bottom:1px solid #333;
-  padding-bottom:5px;
-}
-
-.remove{
-  background:red;
-  color:#fff;
-  border:none;
-  font-size:10px;
-  padding:3px 6px;
-  cursor:pointer;
-  float:right;
-  border-radius:4px;
-}
-
 /* POPUP */
 .popup{
   display:none;
@@ -172,7 +166,6 @@ nav img{
   width:250px;
 }
 
-/* 🔥 UPDATED SIZE BUTTONS */
 .size-btn{
   display:block;
   width:100%;
@@ -180,15 +173,8 @@ nav img{
   padding:10px;
   border:none;
   background:#E9C589;
-  color:#111;
   cursor:pointer;
   font-weight:500;
-  transition:0.2s;
-}
-
-.size-btn:hover{
-  transform:scale(1.03);
-  opacity:0.9;
 }
 
 /* animation */
@@ -211,6 +197,12 @@ nav img{
     <a href="#">CONTACT</a>
   </div>
 </nav>
+
+<!-- CART ICON -->
+<div class="cart-icon" onclick="openCheckout()">
+  🛒
+  <div class="cart-count" id="cartCount">0</div>
+</div>
 
 <section class="hero" id="home">
   <img src="middlelogo.JPEG">
@@ -246,13 +238,6 @@ nav img{
   </div>
 </section>
 
-<!-- CART -->
-<div class="cart">
-  <h4>Cart</h4>
-  <div id="cartItems">Empty</div>
-  <button onclick="checkout()">Checkout</button>
-</div>
-
 <!-- POPUP -->
 <div class="popup" id="popup">
   <div class="popup-box">
@@ -280,36 +265,16 @@ function closePopup(){
 
 function addToCart(size){
   cart.push(selectedItem + " (" + size + ")");
+  document.getElementById("cartCount").innerText = cart.length;
   closePopup();
-  renderCart();
 }
 
-function removeItem(index){
-  cart.splice(index, 1);
-  renderCart();
-}
-
-function renderCart(){
-  const box = document.getElementById("cartItems");
-
+function openCheckout(){
   if(cart.length === 0){
-    box.innerHTML = "Empty";
+    alert("Cart is empty");
     return;
   }
 
-  box.innerHTML = "";
-
-  cart.forEach((item, index) => {
-    box.innerHTML += `
-      <div class="cart-item">
-        ${item}
-        <button class="remove" onclick="removeItem(${index})">X</button>
-      </div>
-    `;
-  });
-}
-
-function checkout(){
   const number = "27646481464";
   const message = "Hi I want to order:\n" + cart.join("\n");
   const url = `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
