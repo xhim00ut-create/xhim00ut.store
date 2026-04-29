@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -112,18 +111,12 @@ nav img{
   letter-spacing:2px;
 }
 
-/* SECTIONS */
-.section{
-  padding:30px;
-}
-
+/* SECTION TITLE */
 .title{
   text-align:center;
   font-size:26px;
-  margin-bottom:15px;
-  display:block;
-  width:fit-content;
   margin:0 auto 25px auto;
+  width:fit-content;
   padding:6px 16px;
   border-radius:10px;
   background:#fff;
@@ -131,6 +124,10 @@ nav img{
 }
 
 /* PRODUCTS */
+.section{
+  padding:30px;
+}
+
 .products{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -167,6 +164,7 @@ nav img{
   background:rgba(0,0,0,0.6);
   justify-content:center;
   align-items:center;
+  z-index:999;
 }
 
 .popup-box{
@@ -195,7 +193,7 @@ nav img{
   100%{transform:translateY(0px);}
 }
 
-/* SCROLL REVEAL */
+/* SCROLL ANIMATION */
 .reveal{
   opacity:0;
   transform:translateY(40px);
@@ -222,6 +220,7 @@ nav img{
   </div>
 </nav>
 
+<!-- CART -->
 <div class="cart-icon" onclick="openCheckout()">
   🛒
   <div class="cart-count" id="cartCount">0</div>
@@ -293,25 +292,44 @@ nav img{
   <img src="photoshoot.JPEG" style="width:90%;max-width:500px;border-radius:12px;display:block;margin:0 auto;box-shadow:0 10px 30px rgba(0,0,0,0.1);">
 </section>
 
+<!-- POPUP -->
+<div class="popup" id="popup">
+  <div class="popup-box">
+    <h3>Select Size</h3>
+
+    <button class="size-btn" onclick="addToCart('S')">S</button>
+    <button class="size-btn" onclick="addToCart('M')">M</button>
+    <button class="size-btn" onclick="addToCart('L')">L</button>
+
+    <br>
+    <button onclick="closePopup()">Cancel</button>
+  </div>
+</div>
+
 <script>
 let cart = [];
 let selectedItem = "";
 
+/* open popup */
 function openPopup(item){
   selectedItem = item;
   document.getElementById("popup").style.display = "flex";
 }
 
+/* close popup */
 function closePopup(){
   document.getElementById("popup").style.display = "none";
+  selectedItem = "";
 }
 
+/* add to cart */
 function addToCart(size){
-  cart.push(selectedItem + " (" + size + ")");
+  cart.push(`${selectedItem} (Size ${size})`);
   document.getElementById("cartCount").innerText = cart.length;
   closePopup();
 }
 
+/* checkout */
 function openCheckout(){
   if(cart.length === 0){
     alert("Cart is empty");
@@ -319,7 +337,10 @@ function openCheckout(){
   }
 
   const number = "27646481464";
-  const message = "Hi I want to order:\n" + cart.join("\n");
+
+  let message = "Hi I want to order:\n\n";
+  cart.forEach(item => message += "- " + item + "\n");
+
   const url = `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
   window.open(url, "_blank");
 }
