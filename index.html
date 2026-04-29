@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XHIM00UT</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins', sans-serif;
+}
+
+body{
+  background:#fff;
+  color:#111;
+}
+
+/* NAV */
+nav{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:20px;
+  border-bottom:1px solid #eee;
+  background:#fff;
+}
+
+nav img{
+  width:360px;
+  margin-bottom:10px;
+}
+
+.nav-links{
+  display:flex;
+  gap:30px;
+}
+
+.nav-links a{
+  text-decoration:none;
+  color:#111;
+  font-size:13px;
+}
+
+/* HERO */
+.hero{
+  height:75vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+.hero img{
+  width:420px;
+  max-width:95%;
+  margin-bottom:10px;
+  animation: floatLogo 4s ease-in-out infinite;
+}
+
+.hero h1{
+  font-size:16px;
+  letter-spacing:3px;
+  opacity:0.8;
+}
+
+.hero p{
+  margin-top:10px;
+  margin-bottom:20px;
+  font-size:14px;
+}
+
+/* SHOP BUTTON */
+.shop-btn{
+  background:#E9C589;
+  color:#111;
+  padding:10px 18px;
+  text-decoration:none;
+  font-size:12px;
+  letter-spacing:2px;
+}
+
+/* PRODUCTS */
+.section{
+  padding:30px;
+}
+
+.title{
+  text-align:center;
+  font-size:26px;
+  margin-bottom:15px;
+}
+
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+}
+
+.card{
+  border:1px solid #eee;
+  padding:15px;
+  border-radius:12px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-10px);
+}
+
+.card img{
+  width:100%;
+  border-radius:10px;
+}
+
+/* CART */
+.cart{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  background:#111;
+  color:#fff;
+  padding:15px;
+  border-radius:12px;
+  width:260px;
+  max-height:320px;
+  overflow:auto;
+}
+
+.cart-item{
+  font-size:12px;
+  margin-top:8px;
+  border-bottom:1px solid #333;
+  padding-bottom:5px;
+}
+
+.remove{
+  background:red;
+  color:#fff;
+  border:none;
+  font-size:10px;
+  padding:3px 6px;
+  cursor:pointer;
+  float:right;
+  border-radius:4px;
+}
+
+/* POPUP */
+.popup{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+  justify-content:center;
+  align-items:center;
+}
+
+.popup-box{
+  background:#fff;
+  padding:20px;
+  border-radius:12px;
+  text-align:center;
+  width:250px;
+}
+
+/* 🔥 UPDATED SIZE BUTTONS */
+.size-btn{
+  display:block;
+  width:100%;
+  margin:8px 0;
+  padding:10px;
+  border:none;
+  background:#E9C589;
+  color:#111;
+  cursor:pointer;
+  font-weight:500;
+  transition:0.2s;
+}
+
+.size-btn:hover{
+  transform:scale(1.03);
+  opacity:0.9;
+}
+
+/* animation */
+@keyframes floatLogo{
+  0%{transform:translateY(0px);}
+  50%{transform:translateY(-15px);}
+  100%{transform:translateY(0px);}
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <img src="toplogo.jpg">
+
+  <div class="nav-links">
+    <a href="#home">HOME</a>
+    <a href="#products">SHOP</a>
+    <a href="#">CONTACT</a>
+  </div>
+</nav>
+
+<section class="hero" id="home">
+  <img src="middlelogo.JPEG">
+  <h1>XHIM00UT</h1>
+  <p>Minimal. Bold. Streetwear Energy.</p>
+
+  <a class="shop-btn" href="#products">SHOP NOW</a>
+</section>
+
+<section class="section" id="products">
+  <h2 class="title">New Drops</h2>
+
+  <div class="products">
+
+    <div class="card" onclick="openPopup('Black Tee')">
+      <img src="black.JPG">
+      <h3>Black Tee</h3>
+      <p>R250</p>
+    </div>
+
+    <div class="card" onclick="openPopup('White Tee')">
+      <img src="white.JPG">
+      <h3>White Tee</h3>
+      <p>R250</p>
+    </div>
+
+    <div class="card" onclick="openPopup('Grey Tee')">
+      <img src="grey.JPG">
+      <h3>Grey Tee</h3>
+      <p>R250</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- CART -->
+<div class="cart">
+  <h4>Cart</h4>
+  <div id="cartItems">Empty</div>
+  <button onclick="checkout()">Checkout</button>
+</div>
+
+<!-- POPUP -->
+<div class="popup" id="popup">
+  <div class="popup-box">
+    <h3>Select Size</h3>
+    <button class="size-btn" onclick="addToCart('S')">S</button>
+    <button class="size-btn" onclick="addToCart('M')">M</button>
+    <button class="size-btn" onclick="addToCart('L')">L</button>
+    <br>
+    <button onclick="closePopup()">Cancel</button>
+  </div>
+</div>
+
+<script>
+let cart = [];
+let selectedItem = "";
+
+function openPopup(item){
+  selectedItem = item;
+  document.getElementById("popup").style.display = "flex";
+}
+
+function closePopup(){
+  document.getElementById("popup").style.display = "none";
+}
+
+function addToCart(size){
+  cart.push(selectedItem + " (" + size + ")");
+  closePopup();
+  renderCart();
+}
+
+function removeItem(index){
+  cart.splice(index, 1);
+  renderCart();
+}
+
+function renderCart(){
+  const box = document.getElementById("cartItems");
+
+  if(cart.length === 0){
+    box.innerHTML = "Empty";
+    return;
+  }
+
+  box.innerHTML = "";
+
+  cart.forEach((item, index) => {
+    box.innerHTML += `
+      <div class="cart-item">
+        ${item}
+        <button class="remove" onclick="removeItem(${index})">X</button>
+      </div>
+    `;
+  });
+}
+
+function checkout(){
+  const number = "27646481464";
+  const message = "Hi I want to order:\n" + cart.join("\n");
+  const url = `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
+  window.open(url, "_blank");
+}
+</script>
+
+</body>
+</html>
