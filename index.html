@@ -111,17 +111,25 @@ nav img{
   letter-spacing:2px;
 }
 
-/* PRODUCTS */
+/* SECTIONS */
 .section{
   padding:30px;
 }
 
+/* 🔥 FIXED TITLE CENTERING */
 .title{
+  display:block;
+  width:fit-content;
+  margin:0 auto 25px auto;
   text-align:center;
   font-size:26px;
-  margin-bottom:15px;
+  padding:6px 16px;
+  border-radius:10px;
+  background:#fff;
+  box-shadow:0 6px 18px rgba(233, 197, 137, 0.35);
 }
 
+/* PRODUCTS */
 .products{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -186,7 +194,7 @@ nav img{
   100%{transform:translateY(0px);}
 }
 
-/* 🔥 SCROLL REVEAL ANIMATION */
+/* SCROLL ANIMATION */
 .reveal{
   opacity:0;
   transform:translateY(40px);
@@ -213,7 +221,6 @@ nav img{
   </div>
 </nav>
 
-<!-- CART -->
 <div class="cart-icon" onclick="openCheckout()">
   🛒
   <div class="cart-count" id="cartCount">0</div>
@@ -233,7 +240,6 @@ nav img{
   <h2 class="title">New Drops</h2>
 
   <div class="products">
-
     <div class="card" onclick="openPopup('Black Tee')">
       <img src="black.JPG">
       <h3>Black Tee</h3>
@@ -251,7 +257,6 @@ nav img{
       <h3>Grey Tee</h3>
       <p>R250</p>
     </div>
-
   </div>
 </section>
 
@@ -260,7 +265,6 @@ nav img{
   <h2 class="title">Coming Soon</h2>
 
   <div class="products">
-
     <div class="card">
       <img src="suit.jpeg">
       <h3>Tracksuit</h3>
@@ -278,7 +282,6 @@ nav img{
       <h3>Leather Jacket</h3>
       <p>Coming Soon</p>
     </div>
-
   </div>
 </section>
 
@@ -288,18 +291,6 @@ nav img{
 
   <img src="photoshoot.jpeg" style="width:90%;max-width:500px;border-radius:12px;display:block;margin:0 auto;box-shadow:0 10px 30px rgba(0,0,0,0.1);">
 </section>
-
-<!-- POPUP -->
-<div class="popup" id="popup">
-  <div class="popup-box">
-    <h3>Select Size</h3>
-    <button class="size-btn" onclick="addToCart('S')">S</button>
-    <button class="size-btn" onclick="addToCart('M')">M</button>
-    <button class="size-btn" onclick="addToCart('L')">L</button>
-    <br>
-    <button onclick="closePopup()">Cancel</button>
-  </div>
-</div>
 
 <script>
 let cart = [];
@@ -332,15 +323,11 @@ function openCheckout(){
   window.open(url, "_blank");
 }
 
-/* 🔥 SCROLL REVEAL */
+/* scroll reveal */
 function revealOnScroll(){
-  const elements = document.querySelectorAll(".reveal");
-
-  elements.forEach(el => {
-    const windowHeight = window.innerHeight;
+  document.querySelectorAll(".reveal").forEach(el=>{
     const top = el.getBoundingClientRect().top;
-
-    if(top < windowHeight - 100){
+    if(top < window.innerHeight - 100){
       el.classList.add("active");
     }
   });
